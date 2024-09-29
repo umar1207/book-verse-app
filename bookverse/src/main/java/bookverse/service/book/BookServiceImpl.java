@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService {
         if(checkBook != null) {
             throw new EntityAlreadyExistsException("Book already exists with name = " + bookCreateDto.getBookName());
         }
-        Book book = new Book(bookCreateDto.getBookName(), bookCreateDto.getAuthorName(), bookCreateDto.getGenre(), bookCreateDto.getTotalCopies());
+        Book book = new Book(bookCreateDto.getBookName(), bookCreateDto.getAuthorName(), bookCreateDto.getGenre(), bookCreateDto.getTotalCopies(), bookCreateDto.getBookPhoto());
         bookRepository.save(book);
     }
 
@@ -47,7 +47,7 @@ public class BookServiceImpl implements BookService {
         List<BookReadDto> allBooks = new ArrayList<>();
         List<Book> books = bookRepository.findAll();
         for(Book book: books){
-            BookReadDto bookReadDto = new BookReadDto(book.getBookId(), book.getBookName(), book.getAuthorName(), book.getGenre(), book.getAvailableCopies(), book.getTotalCopies(), book.getActive());
+            BookReadDto bookReadDto = new BookReadDto(book.getBookId(), book.getBookName(), book.getAuthorName(), book.getGenre(), book.getAvailableCopies(), book.getTotalCopies(), book.getActive(), book.getBookPhoto());
             allBooks.add(bookReadDto);
         }
         return allBooks;
@@ -58,7 +58,7 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookRepository.searchBook(bookName, authorName, genre);
         List<BookReadDto> searchedBooks = new ArrayList<>();
         for(Book book: books){
-            BookReadDto bookReadDto = new BookReadDto(book.getBookId(), book.getBookName(), book.getAuthorName(), book.getGenre(), book.getAvailableCopies(), book.getTotalCopies(), book.getActive());
+            BookReadDto bookReadDto = new BookReadDto(book.getBookId(), book.getBookName(), book.getAuthorName(), book.getGenre(), book.getAvailableCopies(), book.getTotalCopies(), book.getActive(), book.getBookPhoto());
             searchedBooks.add(bookReadDto);
         }
         return searchedBooks;
@@ -86,7 +86,7 @@ public class BookServiceImpl implements BookService {
         String genre = bookUpdateDto.getGenre();
         Long availableCopies = bookUpdateDto.getAvailableCopies();
         Long totalCopies = bookUpdateDto.getTotalCopies();
-        Boolean isActive = bookUpdateDto.getActive();
+        String bookPhoto = bookUpdateDto.getBookPhoto();
 
         if(authorName != null){
             book.setAuthorName(authorName);
@@ -108,9 +108,20 @@ public class BookServiceImpl implements BookService {
             book.setAvailableCopies(availableCopies);
         }
 
-        if(isActive != null){
-            if(isActive) book.setActive(Boolean.TRUE);
-            else deleteBook(bookId);
+        if(bookPhoto != null) {book.setBookPhoto(bookPhoto);}
+
+//        Boolean active = bookUpdateDto.getActive();
+        Boolean isActive = bookUpdateDto.getActive();
+        if (isActive == Boolean.FALSE) {
+            // Handle deactivation or treat null as false
+            if (book.getAvailableCopies().equals(book.getTotalCopies())) {
+                book.setActive(Boolean.FALSE);
+            } else {
+                throw new EntityReferencedException("Book is issued by someone and cannot be deactivated");
+            }
+        } else {
+            // Reactivating the book
+            book.setActive(Boolean.TRUE);
         }
 
         bookRepository.save(book);
@@ -167,7 +178,7 @@ public class BookServiceImpl implements BookService {
         List<IssueRecord> issueRecords = issueRecordRepository.findAll();
         List<IssueRecordReadDto> records = new ArrayList<>();
         for(IssueRecord issueRecord: issueRecords){
-            IssueRecordReadDto issueRecordReadDto = new IssueRecordReadDto(issueRecord.getIssueId(), issueRecord.getUser().getUserId(), issueRecord.getBook().getBookId(), issueRecord.getIssueDate(), issueRecord.getReturnDate(), issueRecord.getReturned());
+            IssueRecordReadDto issueRecordReadDto = new IssueRecordReadDto(issueRecord.getIssueId(), issueRecord.getUser().getUserId(), issueRecord.getUser().getName(), issueRecord.getBook().getBookId(), issueRecord.getBook().getBookName(), issueRecord.getIssueDate(), issueRecord.getReturnDate(), issueRecord.getReturned());
             records.add(issueRecordReadDto);
         }
         return records;

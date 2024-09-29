@@ -18,12 +18,11 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
-
     @Override
     public void createUser(UserCreateDto userCreateDto) {
         Optional<User> checkUser = userRepository.findByEmail(userCreateDto.getEmail());
@@ -96,12 +95,10 @@ public class UserServiceImpl implements UserService{
     public Map<String, Object> login(UserLoginDto userLoginDto, HttpSession session) {
         Optional<User> user = userRepository.findByEmail(userLoginDto.getEmail());
         if(user.isPresent() && user.get().getPassword().equals(userLoginDto.getPassword())){
-            session.setAttribute("userId", user.get().getUserId());
-            session.setAttribute("userRoleName", user.get().getRole().getRoleName());
-
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Login successful");
             response.put("userId", user.get().getUserId());
+            response.put("userName", user.get().getName());
             response.put("userRoleName", user.get().getRole().getRoleName());
 
             return response;
@@ -112,4 +109,5 @@ public class UserServiceImpl implements UserService{
     public void logout(HttpSession session) {
         session.invalidate();
     }
+
 }

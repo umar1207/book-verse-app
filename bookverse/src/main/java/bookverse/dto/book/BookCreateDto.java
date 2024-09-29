@@ -12,6 +12,8 @@ public class BookCreateDto {
     private String genre;
     @NotNull(message = "Book copies cannot be null")
     private Long totalCopies;
+    @NotBlank(message = "Book Image cannot be empty")
+    private String bookPhoto;
     public String getBookName() {
         return bookName;
     }
@@ -23,5 +25,9 @@ public class BookCreateDto {
     }
     public Long getTotalCopies() {
         return totalCopies;
+    }
+
+    public String getBookPhoto() {
+        return bookPhoto;
     }
 }

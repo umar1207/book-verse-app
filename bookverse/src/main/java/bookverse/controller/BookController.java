@@ -28,10 +28,8 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
     @GetMapping("/search")
-    public ResponseEntity<?> searchBooks(@RequestParam(required = false) String bookName,
-                                         @RequestParam(required = false) String authorName,
-                                         @RequestParam(required = false) String genre){
-        List<BookReadDto> books = bookService.searchBooks(bookName,authorName, genre);
+    public ResponseEntity<?> searchBooks(@RequestParam(required = false) String searchTerm){
+        List<BookReadDto> books = bookService.searchBooks(searchTerm,searchTerm, searchTerm);
         return ResponseEntity.ok(books);
     }
     @DeleteMapping("/{bookId}")

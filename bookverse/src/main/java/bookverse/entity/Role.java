@@ -2,6 +2,7 @@ package bookverse.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -44,4 +45,5 @@ public class Role {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
 }

@@ -19,6 +19,8 @@ public class Book {
    @Column(nullable = false)
    private String genre;
 
+   @Column(length = 42345, nullable = false)
+   private String bookPhoto;
    @Column(nullable = false)
    private Long totalCopies;
 
@@ -33,11 +35,12 @@ public class Book {
 
    public Book(){};
 
-    public Book(String bookName, String authorName, String genre, Long totalCopies) {
+    public Book(String bookName, String authorName, String genre, Long totalCopies, String bookPhoto) {
         this.bookName = bookName;
         this.authorName = authorName;
         this.genre = genre;
         this.totalCopies = totalCopies;
+        this.bookPhoto = bookPhoto;
         this.availableCopies = totalCopies; // initially total = available
         this.isActive = Boolean.TRUE;
     }
@@ -96,6 +99,14 @@ public class Book {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public String getBookPhoto() {
+        return bookPhoto;
+    }
+
+    public void setBookPhoto(String bookPhoto) {
+        this.bookPhoto = bookPhoto;
     }
 
     public Set<IssueRecord> getIssueRecords() {

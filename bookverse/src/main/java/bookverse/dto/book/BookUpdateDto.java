@@ -6,15 +6,16 @@ public class BookUpdateDto {
     private Long availableCopies;
     private Long totalCopies;
     private Boolean isActive;
-
+    private String bookPhoto;
     public BookUpdateDto() {}
 
-    public BookUpdateDto(String authorName, String genre, Long availableCopies, Long totalCopies, Boolean isActive) {
+    public BookUpdateDto(String authorName, String genre, Long availableCopies, Long totalCopies, Boolean isActive, String bookPhoto) {
         this.authorName = authorName;
         this.genre = genre;
         this.availableCopies = availableCopies;
         this.totalCopies = totalCopies;
         this.isActive = isActive;
+        this.bookPhoto = bookPhoto;
     }
 
     public String getAuthorName() {
@@ -35,5 +36,9 @@ public class BookUpdateDto {
 
     public Boolean getActive() {
         return isActive;
+    }
+
+    public String getBookPhoto() {
+        return bookPhoto;
     }
 }

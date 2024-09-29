@@ -8,10 +8,10 @@ public class BookReadDto {
     private Long availableCopies;
     private Long totalCopies;
     private Boolean isActive;
-
+    private String bookPhoto;
     public BookReadDto(){};
 
-    public BookReadDto(Long bookId, String bookName, String authorName, String genre, Long availableCopies, Long totalCopies, Boolean isActive) {
+    public BookReadDto(Long bookId, String bookName, String authorName, String genre, Long availableCopies, Long totalCopies, Boolean isActive, String bookPhoto) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.authorName = authorName;
@@ -19,6 +19,7 @@ public class BookReadDto {
         this.availableCopies = availableCopies;
         this.totalCopies = totalCopies;
         this.isActive = isActive;
+        this.bookPhoto = bookPhoto;
     }
 
     public Long getBookId() {
@@ -75,5 +76,13 @@ public class BookReadDto {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public String getBookPhoto() {
+        return bookPhoto;
+    }
+
+    public void setBookPhoto(String bookPhoto) {
+        this.bookPhoto = bookPhoto;
     }
 }

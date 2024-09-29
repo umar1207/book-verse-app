@@ -5,17 +5,21 @@ import java.time.LocalDate;
 public class IssueRecordReadDto {
     private Long issueId;
     private Long userId;
+    private String userName;
     private Long bookId;
+    private String bookName;
     private LocalDate issueDate;
     private LocalDate returnDate;
     private Boolean isReturned;
 
     public IssueRecordReadDto() {}
 
-    public IssueRecordReadDto(Long issueId, Long userId, Long bookId, LocalDate issueDate, LocalDate returnDate, Boolean isReturned) {
+    public IssueRecordReadDto(Long issueId, Long userId, String userName, Long bookId, String bookName, LocalDate issueDate, LocalDate returnDate, Boolean isReturned) {
         this.issueId = issueId;
         this.userId = userId;
         this.bookId = bookId;
+        this.userName = userName;
+        this.bookName = bookName;
         this.issueDate = issueDate;
         this.returnDate = returnDate;
         this.isReturned = isReturned;
@@ -43,6 +47,22 @@ public class IssueRecordReadDto {
 
     public void setBookId(Long bookId) {
         this.bookId = bookId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 
     public LocalDate getIssueDate() {

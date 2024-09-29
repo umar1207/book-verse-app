@@ -19,14 +19,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/user")
 public class UserController {
     @Autowired
-    UserService userService;
-
-    @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateDto userCreateDto){
-        userService.createUser(userCreateDto);
-        return ResponseEntity.ok("User created successfully");
-    }
-
+    private UserService userService;
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
     public ResponseEntity<?> getAllUsers(){
@@ -44,6 +37,12 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok("User deleted");
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateDto userCreateDto){
+        userService.createUser(userCreateDto);
+        return ResponseEntity.ok("User created successfully");
     }
 
     @PostMapping("/login")
